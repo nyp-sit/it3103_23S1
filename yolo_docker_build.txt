@@ -1,0 +1,16 @@
+python 3.69 
+cuda 10.2 
+cudnn 8.2.1
+tensort 8.2.1
+ubuntu 18.04.6 LTS
+pip3 install torch==1.8.2+cu102 torchvision==0.9.2+cu102 torchaudio==0.8.2 -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
+
+
+docker run -it --gpus all --shm-size=1g --ulimit memlock=-1 --ulimit stack=67108864  --rm -v d:/balloon_data:/data khengkok/yolov5:v2  
+
+# Train YOLOv5s on COCO128 for 3 epochs
+python train.py --img 448 --batch 16 --epochs 3 --data /data/data.yaml --weights yolov5s.pt
+
+python export.py --weights runs/train/exp/weights/best.pt --include onnx --opset 12 
+python export.py --device 0 --weights runs/train/exp/weights/best.pt --include engine
+python detect.py --weights runs/train/exp/weights/best.engine --source /data/sample_balloon.jpeg
