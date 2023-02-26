@@ -13,4 +13,4 @@ python train.py --img 448 --batch 16 --epochs 3 --data /data/data.yaml --weights
 
 python export.py --weights runs/train/exp/weights/best.pt --include onnx --opset 12 
 python export.py --device 0 --weights runs/train/exp/weights/best.pt --include engine
-python detect.py --weights runs/train/exp/weights/best.engine --source /data/sample_balloon.jpeg
+python detect.py --weights runs/train/exp2/weights/last.engine --data=/root/data/data.yaml --source=/root/data/sample_balloon.jpeg 
